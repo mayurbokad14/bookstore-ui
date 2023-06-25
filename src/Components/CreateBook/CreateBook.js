@@ -60,6 +60,8 @@ function CreateBook(){
                 <input type="submit" value="Create Book" />
             </form>
 
+            <p>New book name is : {bookName}</p>
+
             
         </div>
     );
