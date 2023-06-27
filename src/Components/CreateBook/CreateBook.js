@@ -59,9 +59,6 @@ function CreateBook(){
                 <input type="text" placeholder="Quantity in inventory" onChange={e=> setQuantity(e.target.value)} />
                 <input type="submit" value="Create Book" />
             </form>
-
-            <p>New book name is : {bookName}</p>
-
             
         </div>
     );
