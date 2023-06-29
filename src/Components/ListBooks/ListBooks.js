@@ -1,3 +1,4 @@
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -6,9 +7,7 @@ function ListBooks(){
 
     const [bookList, setBookList] = useState(null);
     const [filteredBookList, setFilteredBookList] = useState(null);
-
     const [execute, setExecute ] = useState(null); 
-
 
     const filterList = event => {
 
@@ -54,44 +53,45 @@ function ListBooks(){
             getBookList();
         }, []
     );
-
     return (
         <div>
 
-            <input type="text" placeholder="type to search book" onChange={filterList} />
-            
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Isbn</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
+           
+            <TextField variant="outlined" label="Type to Search" onChange={filterList} />
+
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 600 }} aria-label="Books List">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Isbn</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell>Price</TableCell>
+                            <TableCell>Quantity</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+
                     {
                         bookList === null ? bookList : 
                         bookList.map(b=>{
                             return (
-                                <tr key={b.isbn}>
-                                    <td>{b.isbn}</td>
-                                    <td>{b.name}</td>
-                                    <td>{b.description}</td>
-                                    <td>{b.price}</td>
-                                    <td>{b.quantity}</td>
-                                </tr>
+                                <TableRow key={b.isbn}>
+                                    <TableCell>{b.isbn}</TableCell>
+                                    <TableCell>{b.name}</TableCell>
+                                    <TableCell>{b.description}</TableCell>
+                                    <TableCell>{b.price}</TableCell>
+                                    <TableCell>{b.quantity}</TableCell>
+                                </TableRow>
                             );
                         })
                     }
-                </tbody>
-            </table>
 
+                    </TableBody>
+                </Table>
+            </TableContainer>
             
         </div>
-
     );
 }
-
 export default ListBooks;

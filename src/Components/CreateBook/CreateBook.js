@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 
 
-
 function CreateBook(){
 
     const [bookName, setBookName ] = useState("");
@@ -51,6 +50,7 @@ function CreateBook(){
 
     return (
         <div>
+            <ul>
             <form onSubmit={preSubmit } >
                 <input type="text" placeholder="ISBN" onChange={e=> setIsbn(e.target.value)}  />
                 <input type="text" placeholder="Name of the Book" onChange={e=> setBookName(e.target.value)} />
@@ -58,10 +58,10 @@ function CreateBook(){
                 <input type="text" placeholder="Book Price" onChange={e=> SetPrice(e.target.value)} />
                 <input type="text" placeholder="Quantity in inventory" onChange={e=> setQuantity(e.target.value)} />
                 <input type="submit" value="Create Book" />
-            </form>
-            
+            </form> 
+            </ul>
         </div>
     );
-}
-
+}        
 export default CreateBook;
+        
