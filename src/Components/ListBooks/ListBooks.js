@@ -3,11 +3,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 
-function ListBooks(){
+// function ListBooks(maxItems, minItems)
+
+function ListBooks({maxItems}){
 
     const [bookList, setBookList] = useState(null);
     const [filteredBookList, setFilteredBookList] = useState(null);
     const [execute, setExecute ] = useState(null); 
+    const [backendDown, setBackendDown] = useState(false);
 
     const filterList = event => {
 
@@ -37,12 +40,34 @@ function ListBooks(){
             };
         }
 
-        const response = await axios(payload);
+        if(maxItems !== null ) {
+            payload["params"]["maxItems"] = maxItems;
+        }
 
-        console.log(response.data);
+        try {
 
-        setBookList(response.data);
-        setFilteredBookList(response.data);
+            const response = await axios(payload);
+
+            console.log(response.data);
+
+            setBookList(response.data);
+
+            /* if(maxItems !== null && typeof(maxItems) === 'number' && maxItems > 0 ){
+                setFilteredBookList(response.data.slice(0,maxItems));
+            }
+            else{
+                setFilteredBookList(response.data);
+            } */
+
+            setBackendDown(false);
+            setFilteredBookList(response.data);
+            
+        } catch (error) {
+            console.log(error);
+            setBackendDown(true);
+        }
+
+        
 
     };
 
@@ -73,8 +98,8 @@ function ListBooks(){
                     <TableBody>
 
                     {
-                        bookList === null ? bookList : 
-                        bookList.map(b=>{
+                        filteredBookList === null ? filteredBookList : 
+                        filteredBookList.map(b=>{
                             return (
                                 <TableRow key={b.isbn}>
                                     <TableCell>{b.isbn}</TableCell>
@@ -90,6 +115,8 @@ function ListBooks(){
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {backendDown ? <h1>Backend is down</h1> : null }
             
         </div>
     );
