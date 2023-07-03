@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -11,15 +11,21 @@ function ListBooks({maxItems}){
     const [filteredBookList, setFilteredBookList] = useState(null);
     const [execute, setExecute ] = useState(null); 
     const [backendDown, setBackendDown] = useState(false);
+    const [totalPages, setTotalPages] = useState(0);
+    const [searchFilter, setSearchFilter] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const filterList = event => {
 
         if(execute!==null){
-            clearTimeout(execute)
+            clearTimeout(execute);
         }
+        setSearchFilter(event.target.value);
 
         let temp = setTimeout(()=>{
-            getBookList(event.target.value)
+            
+            console.log(event.target.value);
+            getBookList();
         }, 500);
 
         setExecute(temp);
@@ -27,22 +33,29 @@ function ListBooks({maxItems}){
     };
 
 
-    const getBookList = async (temp) => {
+    const getBookList = async (pageNumber) => {
+
+        const pageNum = typeof(pageNumber) === 'undefined' ? 1 : pageNumber;
 
         let payload = {
             method: "get",
-            url: "http://localhost:3001/v1/api/book"
+            url: "http://localhost:3001/v1/api/book",
+            params : {
+                pageNum: pageNum
+            }
         };
 
-        if(temp !== null){
-            payload["params"] ={
-                name : temp
-            };
+        console.log(searchFilter);
+
+        if(searchFilter !== null) {
+            payload["params"]["name"] = searchFilter;
         }
 
         if(maxItems !== null ) {
             payload["params"]["maxItems"] = maxItems;
         }
+
+        console.log(payload);
 
         try {
 
@@ -50,7 +63,7 @@ function ListBooks({maxItems}){
 
             console.log(response.data);
 
-            setBookList(response.data);
+            setBookList(response.data.content);
 
             /* if(maxItems !== null && typeof(maxItems) === 'number' && maxItems > 0 ){
                 setFilteredBookList(response.data.slice(0,maxItems));
@@ -60,7 +73,11 @@ function ListBooks({maxItems}){
             } */
 
             setBackendDown(false);
-            setFilteredBookList(response.data);
+            setFilteredBookList(response.data.content);
+            const r = response.data.total % response.data.pageable.size;
+            const q = parseInt(response.data.total / response.data.pageable.size)
+            const totalPages = q + (r > 0 ? 1 : 0);
+            setTotalPages(totalPages);
             
         } catch (error) {
             console.log(error);
@@ -78,6 +95,8 @@ function ListBooks({maxItems}){
             getBookList();
         }, []
     );
+
+    //creates a view
     return (
         <div>
 
@@ -115,6 +134,13 @@ function ListBooks({maxItems}){
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <div>
+                <Pagination count={totalPages} color="primary" page={currentPage} onChange={(e, p)=>{
+                    getBookList(p);
+                    setCurrentPage(p);
+                }} />
+            </div>
 
             {backendDown ? <h1>Backend is down</h1> : null }
             
