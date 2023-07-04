@@ -1,3 +1,4 @@
+import { Box, Button, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 
@@ -49,19 +50,37 @@ function CreateBook(){
     };
 
     return (
-        <div>
-            <ul>
+        <Box component="form" sx={{m: 6 ,width: "80%"}} >
             <form onSubmit={preSubmit } >
-                <input type="text" placeholder="ISBN" onChange={e=> setIsbn(e.target.value)}  />
-                <input type="text" placeholder="Name of the Book" onChange={e=> setBookName(e.target.value)} />
-                <input type="text" placeholder="Book Description" onChange={e=> setDescription(e.target.value)} />
-                <input type="text" placeholder="Book Price" onChange={e=> SetPrice(e.target.value)} />
-                <input type="text" placeholder="Quantity in inventory" onChange={e=> setQuantity(e.target.value)} />
-                <input type="submit" value="Create Book" />
+
+                <Grid xs={{m: 2, p:16}} container rowSpacing={1} columnSpacing={{ xs:1, sm: 2, md: 3}}>
+                     <Grid item xs={12}>
+                        <TextField label="ISBN" onChange={e=> setIsbn(e.target.value)} />
+                    </Grid>
+
+                    <Grid  item xs={12}>
+                        <TextField label="Name of the Book" onChange={e=> setBookName(e.target.value)} />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField type="text" label="Book Description" onChange={e=> setDescription(e.target.value)} />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField type="text" label="Book Price" onChange={e=> SetPrice(e.target.value)} />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField type="text" label="Quantity in inventory" onChange={e=> setQuantity(e.target.value)} />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Button type="submit" variant="outlined"> Add New Book </Button>
+                    </Grid>
+                </Grid>
             </form> 
-            </ul>
-        </div>
+        </Box>
     );
-}        
+}      
 export default CreateBook;
         
