@@ -6,6 +6,7 @@ import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import CssBaseline from '@mui/material/CssBaseline';
 import bgimg from "./pexels-tuur-tisseghem-626986.jpg";
+import SearchAppBar from './Components/SearchAppBar/SearchAppBar';
 
 const darkTheme = createTheme({
   palette: {
@@ -16,26 +17,9 @@ const darkTheme = createTheme({
 function App() {
 
   return (
-    
     <ThemeProvider theme={darkTheme} >
-      
-      <CssBaseline />
-      <Box>
-        <Toolbar>
-          <IconButton size='large'
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' component="div"sx={{ flexGrow: 1 }}>Mayur's Bookstore</Typography>
-        </Toolbar>
-
-        <CreateBook />
-
-      </Box>
+      <SearchAppBar />
+      <CreateBook />
     </ThemeProvider>
   );
 }
