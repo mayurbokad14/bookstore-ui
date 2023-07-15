@@ -73,7 +73,7 @@ function SearchAppBar() {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        BookStore
+                       <center>BookStore</center> 
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
