@@ -1,8 +1,9 @@
-import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import shadows from "@mui/material/styles/shadows";
 import { useState } from "react";
 import isEmail from "validator/lib/isEmail";
 import validator from "validator";
+import axios from "axios";
 
 export default function AddCustomer(){
 
@@ -29,6 +30,14 @@ export default function AddCustomer(){
         },
     });
 
+    const [disableSubmit, setDisableSubmit] = useState(true);
+
+    const [alertConfig, setAlertConfig] = useState({
+        show: false,
+        msg:"",
+        severity :"success"
+    });
+
     const handleName = (event) => {
         setCustomer(prev =>{
             return {
@@ -40,8 +49,10 @@ export default function AddCustomer(){
                 }
             };
         });
-    };
 
+        setDisableSubmit(false)
+    };
+  
     const handleAddress = (event) => {
         setCustomer(prev =>{
             return {
@@ -53,6 +64,7 @@ export default function AddCustomer(){
                 }
             };
         });
+        setDisableSubmit(false)
     };
 
     const handleEmail = (event) => {
@@ -66,6 +78,7 @@ export default function AddCustomer(){
                 }
             };
         });
+        setDisableSubmit(false)
     };
 
     const handlePhone = (event) => {
@@ -79,13 +92,80 @@ export default function AddCustomer(){
                 }
             };
         });
+        setDisableSubmit(false)
     };
 
+    const disappearAlert = (duration) => {
+        setTimeout(() =>{
+            setAlertConfig(prev=>{
+                return{
+                    ...prev,
+                    show: false
+                }
+            });
+        }, duration);
+    };
+
+
+    const submitRequest = async (event) =>  {
+
+        setDisableSubmit(true);
+        
+        try {
+            const response = await axios({
+                url :"http://localhpost:3001/bookstore/v1/customer",
+                method:  "post",
+                headers:{
+                    "Content-Type" : "application/json"
+                },
+                 data: {
+                    name: customer.name,
+                    address: customer.address,
+                    email :customer.email,
+                    phone :customer.phone
+                }
+            });
+
+            console.log(response.data);
+
+            if(event !==null){
+                event.target.reset();
+            }
+
+            if(response.status === 200){
+                setAlertConfig({
+                    severity: "success",
+                    msg: response.data.message,
+                    show: true
+                });
+            }
+
+            disappearAlert(5000);
+        } catch (error){
+            console.log(error);
+            setDisableSubmit(false);
+
+            setAlertConfig({
+                severity: "error",
+                msg: "Something went wrong, please try after sometime",
+                show: true
+            });
+        }
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        submitRequest(event);
+
+        return false;
+    };
 
     return (
         <div style={{padding:"5px"}} >
             <Box sx={{flexGrow: 1}} >
                 <Container maxWidth="sm">
+                    <form onSubmit={handleSubmit}>
                         <Grid container spacing={4}>
                             <Grid item xs={12}>
                                 <Typography variant="h5">
@@ -110,15 +190,27 @@ export default function AddCustomer(){
                             </Grid>
                             
                             <Grid item xs={12} md={12}>
-                                <Box display="flex"justifyContent="flex-end">
-                                    <Button style={{minWidth:"200px"}} variant="outlined" size="large"  disabled={
-                                        customer.name.validationFailed || customer.email.validationFailed || customer.phone.validationFailed || customer.address.validationFailed
-                                    }>Add</Button>
-                                </Box>
-                                
-                            </Grid>
-                            
+            
+                                    <Button type ="submit" style={{minWidth:"200px"}} variant="outlined" size="large"  disabled={
+                                        customer.name.validationFailed || customer.email.validationFailed || customer.phone.validationFailed || customer.address.validationFailed || disableSubmit
+                                    }>Add</Button>    
+                            </Grid>    
                         </Grid>
+                    </form>
+                </Container>
+
+                <Container maxWidth="md">
+                    <Grid container spacing={4}>
+                        <Grid item>
+                            {
+                                alertConfig.show ?
+                                <Alert severity={alertConfig.severity}>
+                                    {alertConfig.msg}
+                                </Alert>
+                                : null
+                            }
+                        </Grid>
+                    </Grid>
                 </Container>
             </Box>
         </div>

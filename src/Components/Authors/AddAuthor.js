@@ -109,12 +109,9 @@ export default function AddAuthor(){
             });
 
             disappearAlert(7000);
-            
         }
 
         //setDisableSubmit(false);
-
-        
     };
 
     const handleSubmit = (event) => {

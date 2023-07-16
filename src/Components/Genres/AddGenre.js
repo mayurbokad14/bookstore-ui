@@ -1,6 +1,8 @@
-import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import shadows from "@mui/material/styles/shadows";
+import axios from "axios";
 import { useState } from "react";
+
 
 
 export default function AddGenre(){
@@ -11,6 +13,14 @@ export default function AddGenre(){
             validationFailed: false,
             helperText: "Invalid Input"
         },
+    });
+
+    const [disableSubmit, setDisableSubmit] = useState(true);
+
+    const [alertConfig, setAlertConfig] = useState({
+        show: false,
+        msg:"",
+        severity :"success"
     });
 
     const handleName = (event) => {
@@ -24,12 +34,85 @@ export default function AddGenre(){
                 }
             };
         });
+
+        setDisableSubmit(false)
     };
+
+    const disappearAlert = (duration) => {
+        setTimeout(()=>{
+            setAlertConfig(prev=>{
+                return {
+                    ...prev,
+                    show: false
+                }
+            });
+        }, duration);
+    };
+
+    const submitRequest = async (event) => {
+
+        setDisableSubmit(true);
+
+        try {
+            const response = await axios({
+                url : "http://localhost:3001/bookstore/v1/genre",
+                method: "post",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                data: {
+                    name : genre.name
+                    
+                }
+            });
+
+            console.log(response.data);
+
+            if(event !==null){
+                event.target.reset();
+            }
+
+            if(response.status === 200){
+                setAlertConfig({
+                    severity: "success",
+                    msg: response.data.message,
+                    show: true
+                });
+            }
+
+            disappearAlert(5000);
+            
+        } catch (error) {
+
+            console.log(error);
+            setDisableSubmit(false);
+
+            setAlertConfig({
+                severity: "error",
+                msg: "Something went wrong, please try after sometime",
+                show: true
+            });
+
+            disappearAlert(7000);
+        }
+
+        //setDisableSubmit(false);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        submitRequest(event);
+
+        return false;
+    };
+
 
     return (
         <div style={{padding:"5px"}} >
             <Box sx={{flexGrow: 1}} >
                 <Container maxWidth="sm">
+                    <form onSubmit={handleSubmit}>
                         <Grid container spacing={4}>
                             <Grid item xs={12}>
                                 <Typography variant="h5">
@@ -37,14 +120,30 @@ export default function AddGenre(){
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField variant="standard" label="Name" required  />
+                                <TextField variant="standard" label="Name" required onChange={handleName}  />
                             </Grid>
                             <Grid item xs={12} md={12}> 
-                                <Button style={{minWidth:"200px"}}  variant="outlined" size="large" disabled={
-                                    genre.name.validationFailed 
+                                <Button type="submit" style={{minWidth:"200px"}}  variant="outlined" size="large" disabled={
+                                    genre.name.validationFailed || disableSubmit
                                 } >Add</Button>
                             </Grid>
-                        </Grid>   
+                        </Grid>  
+                        </form> 
+                </Container>
+                 <Container maxWidth="md" style={{marginTop:"20px"}}>
+                    <Grid container spacing={8}>
+                        <Grid item xs={12}>
+                            {
+                                alertConfig.show ?
+                                <Alert severity={alertConfig.severity}>
+                                    {alertConfig.msg}
+                                </Alert>
+                                : null
+                            }
+                            
+                        </Grid>
+                    </Grid>
+                    
                 </Container>
             </Box>
         </div>
