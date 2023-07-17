@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 const drawerWidth = 240;
 
-export default function ClippedDrawer({selectedView}) {
+export default function ClippedDrawer({ selectedView }) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -36,15 +36,15 @@ export default function ClippedDrawer({selectedView}) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Add Author', 'Add Genre', "List Genres", 'Add Customer', ].map((text, index) => (
+            {['Add Author', 'List Author', ' Add Genre', "List Genres", 'Add Customer'].map((text) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton onClick={()=> {
-                  if(selectedView !==  null){
-                    selectedView(text.replace(" ","").trim().toLowerCase())
-                  } 
+                <ListItemButton onClick={() => {
+                  if (selectedView !== null) {
+                    selectedView(text.replace(" ", "").trim().toLowerCase())
+                  }
                 }
                 }  >
-                  <ListItemIcon>                  
+                  <ListItemIcon>
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>

@@ -7,6 +7,7 @@ import AddAuthor from './Components/Authors/AddAuthor';
 import ClippedDrawer from './Components/SearchAppBar/ClippedDrawer';
 import { useState } from 'react';
 import { ListGenres } from './Components/Genres/ListGenres';
+import { ListAuthor } from './Components/Authors/ListAuthor';
 
 const darkTheme = createTheme({
   palette: {
@@ -32,6 +33,8 @@ function App() {
         return <AddAuthor />
       case "listgenres":
         return <ListGenres />
+      case "listauthor":
+        return <ListAuthor/>
       default:
         return <AddAuthor />;
     }
@@ -40,10 +43,15 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme} >
       <ClippedDrawer selectedView={handleActiveView}/>
-      {renderActiveView(activeView)}
+
+
+      {
+        renderActiveView(activeView)
+      }
       
     </ThemeProvider>
   );
+
 }
 
 export default App;

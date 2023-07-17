@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 
-export function ListGenres(){
+export function ListGenres() {
 
 
     const [genreList, setGenreList] = useState(null);
@@ -12,7 +12,7 @@ export function ListGenres(){
 
         const response = await axios({
             method: "get",
-            url : "http://localhost:3001/bookstore/v1/genre"
+            url: "http://localhost:3001/bookstore/v1/genre"
         });
 
         console.log(response.data);
@@ -20,29 +20,29 @@ export function ListGenres(){
         setGenreList(response.data.data);
     };
 
-    const getRandomColor =  () => {
-        const colors = ["info","success","error","warning","primary","secondary"];
+    const getRandomColor = () => {
+        const colors = ["info", "success", "error", "warning", "primary", "secondary"];
 
-        return colors[Math.floor(Math.random() * 6 )];
+        return colors[Math.floor(Math.random() * 6)];
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getGenres();
-    },[]);
+    }, []);
 
     return (
-        <div style={{padding: "5px"}}>
-            <Box sx={{flexGrow: 1}}>
+        <div style={{ padding: "5px" }}>
+            <Box sx={{ flexGrow: 1 }}>
                 <Container maxWidth="sm">
                     <Grid container spacing={8} justify="space-around">
                         <Grid item md={12}  >
                             {
-                                genreList === null ? null : 
-                                genreList.map(item => {
-                                return (
-                                    <Chip label={item.name} size="small" key={item.genre_id} color={getRandomColor()}  />
-                                ); 
-                                })
+                                genreList === null ? null :
+                                    genreList.map(item => {
+                                        return (
+                                            <Chip sx={{ m: 1 }} label={item.name} size="small" key={item.genre_id} color={getRandomColor()} />
+                                        );
+                                    })
                             }
                         </Grid>
                     </Grid>
