@@ -61,8 +61,7 @@ export default function AddGenre(){
                     "Content-Type" : "application/json"
                 },
                 data: {
-                    name : genre.name
-                    
+                    name : genre.name.value
                 }
             });
 

@@ -6,6 +6,7 @@ import AddCustomer from './Components/Customers/AddCustomer';
 import AddAuthor from './Components/Authors/AddAuthor';
 import ClippedDrawer from './Components/SearchAppBar/ClippedDrawer';
 import { useState } from 'react';
+import { ListGenres } from './Components/Genres/ListGenres';
 
 const darkTheme = createTheme({
   palette: {
@@ -29,6 +30,8 @@ function App() {
         return <AddGenre />
       case "addauthor":
         return <AddAuthor />
+      case "listgenres":
+        return <ListGenres />
       default:
         return <AddAuthor />;
     }
@@ -36,8 +39,9 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme} >
-      {renderActiveView(activeView)}
       <ClippedDrawer selectedView={handleActiveView}/>
+      {renderActiveView(activeView)}
+      
     </ThemeProvider>
   );
 }
