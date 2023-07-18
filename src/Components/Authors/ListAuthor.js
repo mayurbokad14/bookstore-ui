@@ -8,13 +8,47 @@ import {SearchOutlined} from "@mui/icons-material";
 export function ListAuthor() {
 
     const [authorList, setAuthorList] = useState([]);
+    const [searchText, setSearcText] = useState("");
 
-    async function getAuthor() {
+    let timeoutId = null;
 
-        const payload = {
+
+    const handleSearch = event => {
+
+        clearTimeout(timeoutId);
+
+        const name = event.target.value.trim();
+
+        if(name.length > 0){
+
+            if(searchText !== name){
+                timeoutId=setTimeout(()=>{
+                    getAuthor(name);
+                    setSearcText(name);
+                }, 500);
+            }
+        }
+        else{
+            if(searchText !== name){
+                getAuthor();
+            }
+        }
+        
+    };
+
+
+    async function getAuthor(searchVal) {
+        
+        let payload = {
             url: "http://localhost:3001/bookstore/v1/author",
             method: "get"
         };
+
+        if(searchVal!==null && searchVal!== ""){
+            payload["params"] = {
+                name: searchVal
+            };
+        }
 
         const response = await axios(payload);
 
@@ -37,7 +71,7 @@ export function ListAuthor() {
         <Box>
             <Container>
                 
-                <TextField fullWidth  sx={{m:4}} variant="outlined" label="Search Authors..." InputProps={{endAdornment: (
+                <TextField onChange={handleSearch} fullWidth  sx={{m:4}} variant="outlined" label="Search Authors..." InputProps={{endAdornment: (
                     <InputAdornment position="end">
                         <Icon>
                             <SearchOutlined />
@@ -45,6 +79,14 @@ export function ListAuthor() {
                     </InputAdornment>
                 )}} />
 
+                {
+                    authorList.length === 0 ?
+                        <Typography variant="h5">
+                            No results Found
+                        </Typography>
+                    : null
+                }
+                
                 {
                     authorList.map(item => {
                         return (
