@@ -151,8 +151,8 @@ export default function AddAuthor(){
                         </Grid>
                     </form>
                 </Container>
-
-                <Container maxWidth="md" style={{marginTop:"20px"}}>
+                
+                <Container maxWidth="md" style={{marginTop:"20px"}}>                                                                                                
                     <Grid container spacing={8}>
                         <Grid item xs={12}>
                             {
@@ -162,7 +162,7 @@ export default function AddAuthor(){
                                 </Alert>
                                 : null
                             }
-                            
+                          
                         </Grid>
                     </Grid>
                     

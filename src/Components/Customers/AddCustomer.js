@@ -1,5 +1,4 @@
 import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
-import shadows from "@mui/material/styles/shadows";
 import { useState } from "react";
 import isEmail from "validator/lib/isEmail";
 import validator from "validator";
@@ -45,7 +44,7 @@ export default function AddCustomer(){
                 name: {
                     ...prev.name,
                     value: event.target.value.trim(),
-                    validationFailed: event.target.value.trim().length == 0
+                    validationFailed: event.target.value.trim().length === 0
                 }
             };
         });
@@ -60,7 +59,7 @@ export default function AddCustomer(){
                 address: {
                     ...prev.address,
                     value: event.target.value.trim(),
-                    validationFailed: event.target.value.trim().length == 0
+                    validationFailed: event.target.value.trim().length === 0
                 }
             };
         });
@@ -113,16 +112,16 @@ export default function AddCustomer(){
         
         try {
             const response = await axios({
-                url :"http://localhpost:3001/bookstore/v1/customer",
+                url :"http://localhost:3001/bookstore/v1/customer",
                 method:  "post",
                 headers:{
                     "Content-Type" : "application/json"
                 },
                  data: {
-                    name: customer.name,
-                    address: customer.address,
-                    email :customer.email,
-                    phone :customer.phone
+                    name: customer.name.value,
+                    address: customer.address.value,
+                    email :customer.email.value,
+                    phone_number :customer.phone.value
                 }
             });
 
@@ -145,11 +144,23 @@ export default function AddCustomer(){
             console.log(error);
             setDisableSubmit(false);
 
-            setAlertConfig({
-                severity: "error",
-                msg: "Something went wrong, please try after sometime",
-                show: true
-            });
+            if("message" in error.response.data){
+                setAlertConfig({
+                    severity: "error",
+                    msg: error.response.data.message,
+                    show: true
+                });
+            }
+            else{
+                setAlertConfig({
+                    severity: "error",
+                    msg: "Something went wrong, please try after sometime.",
+                    show: true
+                });
+            }
+
+            
+            disappearAlert(5000);
         }
     };
 

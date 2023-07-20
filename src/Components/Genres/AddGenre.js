@@ -1,5 +1,4 @@
 import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
-import shadows from "@mui/material/styles/shadows";
 import axios from "axios";
 import { useState } from "react";
 
@@ -30,7 +29,7 @@ export default function AddGenre(){
                 name: {
                     ...prev.name,
                     value: event.target.value.trim(),
-                    validationFailed: event.target.value.trim().length == 0
+                    validationFailed: event.target.value.trim().length === 0
                 }
             };
         });

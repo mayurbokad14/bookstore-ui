@@ -36,7 +36,7 @@ export default function ClippedDrawer({ selectedView }) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Add Author', 'List Author', ' Add Genre', "List Genres", 'Add Customer'].map((text) => (
+            {['Add Author', 'List Author', 'Add Genre', "List Genres", 'Add Customer', 'List Customer'].map((text) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => {
                   if (selectedView !== null) {
