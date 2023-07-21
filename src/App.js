@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { ListGenres } from './Components/Genres/ListGenres';
 import { ListAuthor } from './Components/Authors/ListAuthor';
 import { ListCustomer } from './Components/Customers/ListCustomer';
+import AddBook from './Components/AddBook';
 
 
 
@@ -40,6 +41,8 @@ function App() {
         return <ListAuthor/>
       case "listcustomer":
         return <ListCustomer/>
+      case "addbook":
+        return <AddBook/>
       default:
         return <AddAuthor />;
     }
