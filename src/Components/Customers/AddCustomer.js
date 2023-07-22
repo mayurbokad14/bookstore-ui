@@ -184,7 +184,7 @@ export default function AddCustomer(){
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                            </Grid>     
+                            </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField variant="standard" label="Name" required onChange={handleName} error={customer.name.validationFailed} helperText={customer.name.validationFailed ? customer.name.helperText : null}  />
                             </Grid>
