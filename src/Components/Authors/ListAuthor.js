@@ -50,11 +50,18 @@ export function ListAuthor() {
             };
         }
 
-        const response = await axios(payload);
+        try {
 
-        console.log(response.data);
+            const response = await axios(payload);
+            console.log(response.data);
 
-        setAuthorList(response.data.data);
+            setAuthorList(response.data.data);
+            
+        } catch (error) {
+            console.log("Something went wrong");
+        }
+
+                
     };
 
     function callWhenInitialised() {
