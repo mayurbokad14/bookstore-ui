@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, Grid, Icon, InputAdornment, InputLabel,  MenuItem, Select, TextField, Typography ,} from "@mui/material";
+import { Alert, Box, Button, Container, FormControl, Grid, Icon, InputAdornment, InputLabel,  MenuItem, Select, TextField, Typography ,} from "@mui/material";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
@@ -13,6 +13,13 @@ export default function AddBook(){
     const [genreList , setGenreList] = useState([]);
 
     const [disabledSubmit, setDisableSubmit] = useState(true);
+
+
+    const [alertConfig,setAlertConfig] = useState({
+        show : false,
+        severity: "info",
+        msg : "Something went wrong"
+    });
 
 
     const [book,setBook] = useState({
@@ -230,7 +237,20 @@ export default function AddBook(){
         });
     };
 
+    const disappearAlert= (delta) => {
+        setTimeout(()=>{
+            setAlertConfig(prev=>{
+                return {
+                    ...prev,
+                    show: false
+                }
+            });
+        }, delta);
+    };
+
     const addBookToInventory =  async (event) => {
+
+        setDisableSubmit(true);
 
         try {
             const response = await axios({
@@ -242,7 +262,14 @@ export default function AddBook(){
                 data : {
                     "isbn" : book.isbn.value,
                     "title" : book.title.value,
-                    "author_id" : book.author.value,
+                    "author" :{
+                        
+                        author_id : book.author.value
+                    },
+
+                    "genre":{
+                        genre_id : book.genre.value
+                    },
                     "genre_id": book.genre.value,
                     "publication_date" : book.publicationdate.value,
                     "price" : book.price.value,
@@ -251,12 +278,41 @@ export default function AddBook(){
             });
 
 
-            event.target.reset();
+            //event.target.reset();
 
             console.log(response.data);
 
+            setAlertConfig({
+                show: true,
+                severity: "success",
+                msg: response.data.message
+            });
+
+            disappearAlert(5000);
+
+            
+
         } catch (error) {
             console.log(error);
+            setDisableSubmit(false);
+
+            if("response" in error &&  "message" in error.response.data){
+                setAlertConfig({
+                    show: true,
+                    severity: "error",
+                    msg: error.response.data.message
+                });
+            }
+            else{
+                setAlertConfig({
+                    show: true,
+                    severity: "error",
+                    msg: "Something went wrong, please try after sometime"
+                });
+            }
+
+            disappearAlert(10000);
+
         }
 
     };
@@ -346,6 +402,20 @@ export default function AddBook(){
                         </Grid>
                     </form>                    
                 </Container>
+
+                {
+                    alertConfig.show ? 
+                    <Container maxWidth="md">
+                        <Grid container>
+                            <Grid item sm={12}>
+                                <Alert fullWidth severity={alertConfig.severity}>{alertConfig.msg}</Alert>
+                            </Grid>
+                        </Grid>
+                        
+                    </Container>
+                    : null
+                }
+                
             </Box>
         </div>
     );
