@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { addGenre } from "../../API/genre";
 
 
 
@@ -53,16 +54,7 @@ export default function AddGenre(){
         setDisableSubmit(true);
 
         try {
-            const response = await axios({
-                url : "http://localhost:3001/bookstore/v1/genre",
-                method: "post",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                data: {
-                    name : genre.name.value
-                }
-            });
+            const response = await addGenre(genre);
 
             console.log(response.data);
 

@@ -4,6 +4,8 @@ import { Box, Card, CardContent, Container, Icon, InputAdornment, TableCell, Tex
 
 import {SearchOutlined} from "@mui/icons-material";
 
+import {getAuthor} from "../../API/author";
+
 
 export function ListAuthor() {
 
@@ -23,7 +25,13 @@ export function ListAuthor() {
 
             if(searchText !== name){
                 timeoutId=setTimeout(()=>{
-                    getAuthor(name);
+                    
+                    getAuthor(name).then(response=>{
+                        setAuthorList(response.data.data)
+                    }).catch(error=>{
+                        console.log(error);
+                    });
+
                     setSearcText(name);
                 }, 500);
             }
@@ -37,7 +45,7 @@ export function ListAuthor() {
     };
 
 
-    async function getAuthor(searchVal) {
+    /* async function getAuthor(searchVal) {
         
         let payload = {
             url: "http://localhost:3001/bookstore/v1/author",
@@ -62,11 +70,26 @@ export function ListAuthor() {
         }
 
                 
+    }; */
+
+    const temp_getAuthor = async () => {
+        const response = getAuthor();
     };
+
 
     function callWhenInitialised() {
 
-        getAuthor();
+        //getAuthor();
+
+        temp_getAuthor();
+
+
+        getAuthor().then(response=>{
+            setAuthorList(response.data.data);
+        }).catch(error=>{
+            console.log("Something went wrong");
+            console.log(error);
+        });
 
     }
 

@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { addAuthor } from "../../API/author";
 
 
 export default function AddAuthor(){
@@ -69,17 +70,7 @@ export default function AddAuthor(){
         setDisableSubmit(true);
 
         try {
-            const response = await axios({
-                url : "http://localhost:3001/bookstore/v1/author",
-                method: "post",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                data: {
-                    name: author.name,
-                    bio: author.bio
-                }
-            });
+            const response = await addAuthor(author);
 
             console.log(response.data);
 

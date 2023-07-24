@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 
+import { getAuthor } from "../API/author";
+import { getGenres } from "../API/genre";
+
 export default function AddBook(){
 
 
@@ -62,43 +65,22 @@ export default function AddBook(){
     });
 
 
-    async function getAuthor(searchVal) {
-        
-        let payload = {
-            url: "http://localhost:3001/bookstore/v1/author",
-            method: "get"
-        };
-
-        if(searchVal!==null && searchVal!== ""){
-            payload["params"] = {
-                name: searchVal
-            };
-        }
-
-        const response = await axios(payload);
-
-        console.log(response.data);
-
-        setAuthorList(response.data.data);
-    };
-
-    const getGenres = async () => {
-
-        const response = await axios({
-            method: "get",
-            url: "http://localhost:3001/bookstore/v1/genre"
-        });
-        console.log(response.data);
-
-        setGenreList(response.data.data);
-    };
-
 
     //myfunction();
 
     useEffect(()=>{
-        getAuthor();
-        getGenres();
+        getAuthor().then(response=>{
+            setAuthorList(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+
+        getGenres().then(response=>{
+            setGenreList(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+        
     },[]);
 
 

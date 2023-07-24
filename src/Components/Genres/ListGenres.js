@@ -1,24 +1,12 @@
 import { Box, Chip, Container, Grid } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { getGenres } from "../../API/genre";
 
 export function ListGenres() {
 
 
     const [genreList, setGenreList] = useState(null);
-
-    const getGenres = async () => {
-
-        const response = await axios({
-            method: "get",
-            url: "http://localhost:3001/bookstore/v1/genre"
-        });
-
-        console.log(response.data);
-
-        setGenreList(response.data.data);
-    };
 
     const getRandomColor = () => {
         const colors = ["info", "success", "error", "warning", "primary", "secondary"];
@@ -26,8 +14,24 @@ export function ListGenres() {
         return colors[Math.floor(Math.random() * 6)];
     };
 
+    function whenErrorOccurs(error){
+        console.log(error)
+    }
+
+    function whenAPIRequestIsCommplete(response){
+        setGenreList(response.data.data);
+    }
+
     useEffect(() => {
-        getGenres();
+        
+        /* getGenres().then(response=>{
+            setGenreList(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+        }); */
+
+        getGenres().then(whenAPIRequestIsCommplete).catch(whenErrorOccurs);
+
     }, []);
 
     return (
