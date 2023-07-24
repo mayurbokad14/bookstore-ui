@@ -1,4 +1,5 @@
-import axios from "axios";
+
+import axios from "axios"
 
 export const getGenres = async () => {
 
@@ -12,7 +13,7 @@ export const getGenres = async () => {
     return response;
 };
 
-export const addGenre = async (event) => {
+export const addGenre = async (gener) => {
     const response = await axios({
         url: "http://localhost:3001/bookstore/v1/genre",
         method: "post",
@@ -20,7 +21,7 @@ export const addGenre = async (event) => {
             "Content-Type": "application/json"
         },
         data: {
-            name: genre.name.value
+            name: gener.name.value
         }
     });
     return response;
