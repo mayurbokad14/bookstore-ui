@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ListGenres } from './Components/Genres/ListGenres';
 import { ListAuthor } from './Components/Authors/ListAuthor';
 import { ListCustomer } from './Components/Customers/ListCustomer';
-import AddBook from './Components/AddBook';
+import AddBook from './Components/Book/AddBook';
 
 
 

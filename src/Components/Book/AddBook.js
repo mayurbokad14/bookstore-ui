@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 
-import { getAuthor } from "../API/author";
-import { getGenres } from "../API/genre";
+import { getAuthor } from "../../API/author";
+import { getGenres } from "../../API/genre";
 
 export default function AddBook(){
 
