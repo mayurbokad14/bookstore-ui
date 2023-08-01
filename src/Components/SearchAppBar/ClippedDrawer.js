@@ -11,6 +11,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { Grid, Icon } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const drawerWidth = 240;
 
@@ -22,6 +24,13 @@ export default function ClippedDrawer({ selectedView }) {
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
             BookStore
+          </Typography>
+          <Typography>
+            <Grid item md={1} position > 
+              <Icon >
+              <AddShoppingCartIcon/>
+            </Icon>
+            </Grid>
           </Typography>
         </Toolbar>
       </AppBar>
