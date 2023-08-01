@@ -25,13 +25,19 @@ export default function ClippedDrawer({ selectedView }) {
           <Typography variant="h6" noWrap component="div">
             BookStore
           </Typography>
-          <Typography>
-            <Grid item md={1} position > 
-              <Icon >
-              <AddShoppingCartIcon/>
+          <Box 
+          display="flex"
+          justifyContent="right"
+          flexGrow={1}
+          alignItems="justify-end"
+          margin={1}
+
+          >
+            <Icon>
+              <AddShoppingCartIcon />
             </Icon>
-            </Grid>
-          </Typography>
+          </Box>
+
         </Toolbar>
       </AppBar>
       <Drawer
