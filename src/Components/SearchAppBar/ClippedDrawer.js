@@ -11,10 +11,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Grid, Icon } from '@mui/material';
+import { Button, Grid, Icon } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const drawerWidth = 240;
+
 
 export default function ClippedDrawer({ selectedView }) {
   return (
@@ -24,20 +25,23 @@ export default function ClippedDrawer({ selectedView }) {
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
             BookStore
+          </Typography>          
+          <Typography >
+          <Button>Cart</Button>
+            
           </Typography>
+        
           <Box 
           display="flex"
           justifyContent="right"
           flexGrow={1}
           alignItems="justify-end"
           margin={1}
-
           >
             <Icon>
-              <AddShoppingCartIcon />
+            <AddShoppingCartIcon />   
             </Icon>
           </Box>
-
         </Toolbar>
       </AppBar>
       <Drawer
@@ -75,3 +79,4 @@ export default function ClippedDrawer({ selectedView }) {
     </Box>
   );
 }
+
