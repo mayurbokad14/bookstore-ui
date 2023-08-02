@@ -23,13 +23,10 @@ export default function ClippedDrawer({ selectedView }) {
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h5" noWrap component="div">
             BookStore
           </Typography>          
-          <Typography >
-          <Button>Cart</Button>
-            
-          </Typography>
+         
         
           <Box 
           display="flex"
@@ -38,6 +35,9 @@ export default function ClippedDrawer({ selectedView }) {
           alignItems="justify-end"
           margin={1}
           >
+            <Typography variant="h5" noWrap component="div">
+            Cart
+          </Typography>  
             <Icon>
             <AddShoppingCartIcon />   
             </Icon>
