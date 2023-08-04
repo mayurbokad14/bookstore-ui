@@ -11,13 +11,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Button, Grid, Icon } from '@mui/material';
+import { Badge, Button, Grid, Icon, IconButton } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useState } from 'react';
 
 const drawerWidth = 240;
 
 
 export default function ClippedDrawer({ selectedView }) {
+
+  const [totalQuanity, setTotalQuantity] = useState(0);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -35,12 +39,14 @@ export default function ClippedDrawer({ selectedView }) {
           alignItems="justify-end"
           margin={1}
           >
-            <Typography variant="h5" noWrap component="div">
-            Cart
-          </Typography>  
-            <Icon>
-            <AddShoppingCartIcon />   
-            </Icon>
+            
+              <IconButton aria-label='Shopping Cart'>
+              <Badge color='secondary' badgeContent={totalQuanity}>
+                <AddShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            
+            
           </Box>
         </Toolbar>
       </AppBar>
@@ -55,7 +61,7 @@ export default function ClippedDrawer({ selectedView }) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Add Author', 'List Author', 'Add Genre', "List Genres", 'Add Customer', 'List Customer', 'Add Book'].map((text) => (
+            {['Add Author', 'List Author', 'Add Genre', "List Genres", 'Add Customer', 'List Customer', 'Add Book', 'List Book'].map((text) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => {
                   if (selectedView !== null) {

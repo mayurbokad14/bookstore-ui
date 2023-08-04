@@ -100,7 +100,6 @@ export function ListAuthor() {
     return (
         <Box>
             <Container>
-                
                 <TextField onChange={handleSearch} fullWidth  sx={{m:4}} variant="outlined" label="Search Authors..." InputProps={{endAdornment: (
                     <InputAdornment position="end">
                         <Icon>

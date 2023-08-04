@@ -10,7 +10,7 @@ import { ListGenres } from './Components/Genres/ListGenres';
 import { ListAuthor } from './Components/Authors/ListAuthor';
 import { ListCustomer } from './Components/Customers/ListCustomer';
 import AddBook from './Components/Book/AddBook';
-
+import ListBooks from './Components/Book/ListBooks';
 
 
 const darkTheme = createTheme({
@@ -43,6 +43,8 @@ function App() {
         return <ListCustomer/>
       case "addbook":
         return <AddBook/>
+      case "listbook":
+        return <ListBooks/>
       default:
         return <AddAuthor />;
     }
