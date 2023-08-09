@@ -23,8 +23,14 @@ function App() {
 
   const [activeView, setActiveView] = useState("addauthor");
 
+  const [cartQuantity, setCartQuantity] = useState(0);
+
   const handleActiveView = (view) => {
     setActiveView(view);
+  };
+
+  const updateQuantity = (event) => {
+    setCartQuantity(cartQuantity + 1);
   };
 
   const renderActiveView = (view) =>{
@@ -44,7 +50,7 @@ function App() {
       case "addbook":
         return <AddBook/>
       case "listbook":
-        return <ListBooks/>
+        return <ListBooks cartHandler={updateQuantity} />
       default:
         return <AddAuthor />;
     }
@@ -52,7 +58,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme} >
-      <ClippedDrawer selectedView={handleActiveView}/>
+      <ClippedDrawer selectedView={handleActiveView} cartQuantity={cartQuantity} />
 
 
       {

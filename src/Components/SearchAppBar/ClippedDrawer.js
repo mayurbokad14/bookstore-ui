@@ -18,9 +18,7 @@ import { useState } from 'react';
 const drawerWidth = 240;
 
 
-export default function ClippedDrawer({ selectedView }) {
-
-  const [totalQuanity, setTotalQuantity] = useState(0);
+export default function ClippedDrawer({ selectedView, cartQuantity }) {
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -40,11 +38,11 @@ export default function ClippedDrawer({ selectedView }) {
           margin={1}
           >
             
-              <IconButton aria-label='Shopping Cart'>
-              <Badge color='secondary' badgeContent={totalQuanity}>
+            <IconButton aria-label='Shopping Cart'>
+              <Badge color='secondary' badgeContent={cartQuantity}>
                 <AddShoppingCartIcon />
-                </Badge>
-              </IconButton>
+              </Badge>
+            </IconButton>
             
             
           </Box>

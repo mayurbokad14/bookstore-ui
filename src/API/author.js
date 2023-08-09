@@ -23,6 +23,9 @@ export async function getAuthor(searchVal) {
 };
 
 export const addAuthor = async (author)=>{
+
+    console.log(author);
+    
     const response = await axios({
         url : "http://localhost:3001/bookstore/v1/author",
         method: "post",

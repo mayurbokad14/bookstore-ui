@@ -171,8 +171,10 @@ export default function AddCustomer(){
 
         return false;
     };
+    
 
     return (
+        
         <div style={{padding:"5px"}} >
             <Box sx={{flexGrow: 1}} >
                 <Container maxWidth="sm">

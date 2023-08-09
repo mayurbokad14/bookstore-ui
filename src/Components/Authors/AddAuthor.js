@@ -31,11 +31,15 @@ export default function AddAuthor(){
     const handleName = (event) => {
 
         setAuthor(prev => {
+
             return {
                 ...prev,
-                name: event.target.value.trim(),
-                validationFailed: event.target.value.trim().length === 0
-            }
+                name : {
+                    ...prev.name,
+                    value: event.target.value.trim(),
+                    validationFailed: event.target.value.trim().length === 0
+                }
+            };
         });
 
         setDisableSubmit(false);
@@ -46,8 +50,11 @@ export default function AddAuthor(){
         setAuthor(prev => {
             return {
                 ...prev,
-                bio: event.target.value.trim(),
-                validationFailed: event.target.value.trim().length === 0
+                bio: {
+                    ...prev.bio,
+                    value: event.target.value.trim(),
+                    validationFailed: event.target.value.trim().length === 0
+                }
             }
         });
 
@@ -70,7 +77,8 @@ export default function AddAuthor(){
         setDisableSubmit(true);
 
         try {
-            const response = await addAuthor(author);
+            //console.log(author);
+            const response = await addAuthor({...author});
 
             console.log(response.data);
 

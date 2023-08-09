@@ -4,7 +4,8 @@ import { listBooks } from "../../API/book";
 
 
 
-export default function ListBooks(){
+
+export default function ListBooks({cartHandler}){
 
     const [bookList, setBookList] = useState([]);
 
@@ -39,7 +40,9 @@ export default function ListBooks(){
                                 <Typography variant="h4">
                                     &#8377;{item.price}
                                 </Typography>
-                                <Button variant="outlined">Add to Cart</Button>
+                                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+                                    <Button variant="outlined" onClick={cartHandler}  >Add to Cart</Button>
+                                </Box>
                             </Card>
                         )
                     })
