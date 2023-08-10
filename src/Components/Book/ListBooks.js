@@ -1,13 +1,17 @@
 import { Box, Button, Card, Chip, Container, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { listBooks } from "../../API/book";
 
+import {ShopingCartContext} from "../../Contexts/ShopingCart";
 
 
 
-export default function ListBooks({cartHandler}){
+
+export default function ListBooks(){
 
     const [bookList, setBookList] = useState([]);
+
+    const {setCartQuantity} = useContext(ShopingCartContext);
 
 
     useEffect(()=>{
@@ -15,6 +19,14 @@ export default function ListBooks({cartHandler}){
             setBookList(booksApi.data);
         });
     },[]);
+
+
+
+    const updateQuantity = event =>{
+        setCartQuantity(value => {
+            return value + 1;
+        });
+    };
 
 
     return (
@@ -41,7 +53,7 @@ export default function ListBooks({cartHandler}){
                                     &#8377;{item.price}
                                 </Typography>
                                 <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
-                                    <Button variant="outlined" onClick={cartHandler}  >Add to Cart</Button>
+                                    <Button variant="outlined" onClick={updateQuantity}>Add to Cart</Button>
                                 </Box>
                             </Card>
                         )

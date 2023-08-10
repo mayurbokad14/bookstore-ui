@@ -11,14 +11,19 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Badge, Button, Grid, Icon, IconButton } from '@mui/material';
+import { Badge, IconButton } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState } from 'react';
+
+import {ShopingCartContext} from "../../Contexts/ShopingCart";
+
+import { useContext } from 'react';
 
 const drawerWidth = 240;
 
 
-export default function ClippedDrawer({ selectedView, cartQuantity }) {
+export default function ClippedDrawer({ selectedView}) {
+
+  const {cartQuantity} =  useContext(ShopingCartContext);
 
   return (
     <Box sx={{ display: 'flex' }}>

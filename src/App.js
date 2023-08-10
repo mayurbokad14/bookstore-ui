@@ -12,6 +12,8 @@ import { ListCustomer } from './Components/Customers/ListCustomer';
 import AddBook from './Components/Book/AddBook';
 import ListBooks from './Components/Book/ListBooks';
 
+import {ShopingCartContext} from "./Contexts/ShopingCart";
+
 
 const darkTheme = createTheme({
   palette: {
@@ -50,22 +52,26 @@ function App() {
       case "addbook":
         return <AddBook/>
       case "listbook":
-        return <ListBooks cartHandler={updateQuantity} />
+        return <ListBooks />
       default:
         return <AddAuthor />;
     }
   }
 
+
+
   return (
-    <ThemeProvider theme={darkTheme} >
-      <ClippedDrawer selectedView={handleActiveView} cartQuantity={cartQuantity} />
+    <ShopingCartContext.Provider value={{cartQuantity, setCartQuantity}}>
+        <ThemeProvider theme={darkTheme} >
+        <ClippedDrawer selectedView={handleActiveView} />
 
 
-      {
-        renderActiveView(activeView)
-      }
-      
-    </ThemeProvider>
+        {
+          renderActiveView(activeView)
+        }
+        
+      </ThemeProvider>
+    </ShopingCartContext.Provider>
   );
 
 }
