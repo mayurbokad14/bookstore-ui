@@ -13,6 +13,7 @@ import AddBook from './Components/Book/AddBook';
 import ListBooks from './Components/Book/ListBooks';
 
 import {ShopingCartContext} from "./Contexts/ShopingCart";
+import IncrementDecrement from './Components/IncrementDecrement/IncrementDecrement';
 
 
 const darkTheme = createTheme({
@@ -53,6 +54,8 @@ function App() {
         return <AddBook/>
       case "listbook":
         return <ListBooks />
+      case"incrementdecrement":
+        return <IncrementDecrement/>
       default:
         return <AddAuthor />;
     }

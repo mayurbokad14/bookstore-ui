@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { listBooks } from "../../API/book";
 
 import {ShopingCartContext} from "../../Contexts/ShopingCart";
+import IncrementDecrement from "../IncrementDecrement/IncrementDecrement";
 
 
 
@@ -53,7 +54,7 @@ export default function ListBooks(){
                                     &#8377;{item.price}
                                 </Typography>
                                 <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
-                                    <Button variant="outlined" onClick={updateQuantity}>Add to Cart</Button>
+                                    <IncrementDecrement />
                                 </Box>
                             </Card>
                         )
