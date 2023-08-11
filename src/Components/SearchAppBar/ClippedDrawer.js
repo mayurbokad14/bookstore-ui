@@ -42,6 +42,10 @@ export default function ClippedDrawer() {
     return total;
   };
 
+  const cartClickHanlder = event => {
+    setActiveView("shopingcart");
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -58,15 +62,12 @@ export default function ClippedDrawer() {
           flexGrow={1}
           alignItems="justify-end"
           margin={1}
-          >
-            
-            <IconButton aria-label='Shopping Cart'>
+          > 
+            <IconButton onClick={cartClickHanlder} aria-label='Shopping Cart'>
               <Badge color='secondary' badgeContent={totalItemInCart()}>
                 <AddShoppingCartIcon />
               </Badge>
-            </IconButton>
-            
-            
+            </IconButton>  
           </Box>
         </Toolbar>
       </AppBar>

@@ -14,6 +14,7 @@ import ListBooks from './Components/Book/ListBooks';
 
 import {ShopingCartContext} from "./Contexts/ShopingCart";
 import { ActiveView } from './Contexts/ActiveView';
+import ShopingCart from './Components/ShopingCart/ShopingCart';
 
 
 const darkTheme = createTheme({
@@ -47,6 +48,8 @@ function App() {
         return <AddBook/>
       case "listbook":
         return <ListBooks />
+      case "shopingcart":
+        return <ShopingCart/>
       default:
         return <AddAuthor />;
     }
