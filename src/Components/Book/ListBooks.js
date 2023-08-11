@@ -12,7 +12,7 @@ export default function ListBooks(){
 
     const [bookList, setBookList] = useState([]);
 
-    const {setCartQuantity} = useContext(ShopingCartContext);
+    const {cartItems, setCartItems} = useContext(ShopingCartContext);
 
 
     useEffect(()=>{
@@ -21,13 +21,52 @@ export default function ListBooks(){
         });
     },[]);
 
-
-
-    const updateQuantity = event =>{
-        setCartQuantity(value => {
-            return value + 1;
-        });
+    
+    const isbnExist = isbn => {
+        return isbn in cartItems;
     };
+
+    const addBookToCart = event => {
+        console.log(event.currentTarget.getAttribute('data-id'));
+
+        let newItem = {
+        };
+
+        newItem[event.currentTarget.getAttribute('data-id')] = 1;
+
+        setCartItems(prev=>{
+            return {
+                ...prev,
+                ...newItem
+            };
+        });
+
+    };
+
+
+    const incrementDecrementChangeEvent = (value,uid) => {
+        console.log(value,uid);
+
+        if(value===0){
+            setCartItems(prev=> {
+
+                let temp = {...prev};
+                delete temp[uid];
+
+                return temp;
+
+            });
+        }
+        else{
+            setCartItems(prev => {
+                let temp={...prev};
+                temp[uid]= value;
+
+                return temp;
+            });
+        }
+    };
+
 
 
     return (
@@ -54,7 +93,9 @@ export default function ListBooks(){
                                     &#8377;{item.price}
                                 </Typography>
                                 <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
-                                    <IncrementDecrement />
+                                    {
+                                        isbnExist(item.isbn) ? <IncrementDecrement uid={item.isbn} defaulValue={cartItems[item.isbn]} valueChangeEvent={incrementDecrementChangeEvent} /> : <Button data-id={item.isbn} onClick={addBookToCart} variant="outlined">Add to Cart</Button>
+                                    }
                                 </Box>
                             </Card>
                         )

@@ -14,16 +14,33 @@ import ListItemText from '@mui/material/ListItemText';
 import { Badge, IconButton } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
+import { ActiveView } from '../../Contexts/ActiveView';
+import { useContext } from 'react';
+
 import {ShopingCartContext} from "../../Contexts/ShopingCart";
 
-import { useContext } from 'react';
+//import { useContext } from 'react';
 
 const drawerWidth = 240;
 
 
-export default function ClippedDrawer({ selectedView}) {
+export default function ClippedDrawer() {
 
-  const {cartQuantity} =  useContext(ShopingCartContext);
+
+  const {setActiveView} = useContext(ActiveView);
+
+  const {cartItems} = useContext(ShopingCartContext);
+  
+
+  const totalItemInCart = () => {
+    let total = 0;
+
+    for(let i of Object.keys(cartItems)){
+      total += cartItems[i];
+    }
+
+    return total;
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -44,7 +61,7 @@ export default function ClippedDrawer({ selectedView}) {
           >
             
             <IconButton aria-label='Shopping Cart'>
-              <Badge color='secondary' badgeContent={cartQuantity}>
+              <Badge color='secondary' badgeContent={totalItemInCart()}>
                 <AddShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -67,9 +84,9 @@ export default function ClippedDrawer({ selectedView}) {
             {['Add Author', 'List Author', 'Add Genre', "List Genres", 'Add Customer', 'List Customer', 'Add Book', 'List Book'].map((text) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => {
-                  if (selectedView !== null) {
-                    selectedView(text.replace(" ", "").trim().toLowerCase())
-                  }
+                  
+                  setActiveView(text.replace(" ", "").trim().toLowerCase())
+                  
                 }
                 }  >
                   <ListItemIcon>

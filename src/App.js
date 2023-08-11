@@ -13,7 +13,7 @@ import AddBook from './Components/Book/AddBook';
 import ListBooks from './Components/Book/ListBooks';
 
 import {ShopingCartContext} from "./Contexts/ShopingCart";
-import IncrementDecrement from './Components/IncrementDecrement/IncrementDecrement';
+import { ActiveView } from './Contexts/ActiveView';
 
 
 const darkTheme = createTheme({
@@ -26,15 +26,8 @@ function App() {
 
   const [activeView, setActiveView] = useState("addauthor");
 
-  const [cartQuantity, setCartQuantity] = useState(0);
+  const [cartItems, setCartItems ] = useState({});
 
-  const handleActiveView = (view) => {
-    setActiveView(view);
-  };
-
-  const updateQuantity = (event) => {
-    setCartQuantity(cartQuantity + 1);
-  };
 
   const renderActiveView = (view) =>{
     switch(view){
@@ -54,8 +47,6 @@ function App() {
         return <AddBook/>
       case "listbook":
         return <ListBooks />
-      case"incrementdecrement":
-        return <IncrementDecrement/>
       default:
         return <AddAuthor />;
     }
@@ -64,17 +55,21 @@ function App() {
 
 
   return (
-    <ShopingCartContext.Provider value={{cartQuantity, setCartQuantity}}>
-        <ThemeProvider theme={darkTheme} >
-        <ClippedDrawer selectedView={handleActiveView} />
 
+    <ThemeProvider theme={darkTheme} >
+      <ShopingCartContext.Provider value={{ cartItems, setCartItems }}>
+        <ActiveView.Provider value={{setActiveView}} >
+          <ClippedDrawer   />
+        </ActiveView.Provider>
 
+      
         {
           renderActiveView(activeView)
         }
-        
-      </ThemeProvider>
-    </ShopingCartContext.Provider>
+      </ShopingCartContext.Provider>
+
+    </ThemeProvider>
+
   );
 
 }

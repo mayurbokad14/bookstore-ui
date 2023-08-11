@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
 
-export default function IncrementDecrement({defaulValue, valueChangeEvent}){
+export default function IncrementDecrement({defaulValue, uid, valueChangeEvent}){
 
     const [value, setValue] = useState(0);
 
@@ -15,20 +15,20 @@ export default function IncrementDecrement({defaulValue, valueChangeEvent}){
 
     const onIncrementHandler = event => {
         
-        console.log(value+1);
+        //console.log(value+1);
 
         if(valueChangeEvent!== undefined){
-            valueChangeEvent(value+1);
+            valueChangeEvent(value+1, uid);
         }
         setValue(value+1);
     };
 
     const onDecrementHandler = event => {
 
-        console.log(value-1);
+        //console.log(value-1);
         
         if(valueChangeEvent!== undefined){
-            valueChangeEvent(value-1);
+            valueChangeEvent(value-1, uid);
         }
 
         setValue(value-1);
