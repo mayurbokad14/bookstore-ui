@@ -1,5 +1,5 @@
 import { Box, Card, Container, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { useState } from "react";
+
 import IncrementDecrement from "../IncrementDecrement/IncrementDecrement";
 
 
@@ -43,11 +43,9 @@ export default function ShopingCart(){
 
         return tableRows;
     };
-
-
-
+    
     return(
-        
+
         <div>      
             <Box> 
                 <Container>
